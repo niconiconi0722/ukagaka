@@ -416,16 +416,16 @@ Choice.UserTimeOutLimit
 {
 	if ISVAR('TimeOutLimit')
 	{
-		"\0待机时间变更为%(TimeOutLimit * 6)分鐘！"
+		"\0待机时间变更为%(TimeOutLimit * 6)分鐘！\w9/"
 		--
-		"其实老大你随便写一个就行了"
+		"其实老大你随便写一个就行了\w9\w9/"
 		--
-		"連在一起讀不通啊"
+		"連在一起讀不通啊\w9\w9\n\n/"
 	}
 
 	--
 
-	"\0\c%(username)，你希望等待多少分鐘才进入待机模式呢？\w9\n不过我不愿意等太久，请不要输入太长的时间。\w9/
+	"\0\c%(username)，你希望等待多少分鐘才进入待机模式呢？\w9\w9不过我不愿意等太久，请不要输入太长的时间。\w9/
 	\1待机时间将会改为输入值的*6倍*。\w9/
 	\![open,inputbox,teachtimeoutlimit,-1]\e"
 }
