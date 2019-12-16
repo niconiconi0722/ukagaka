@@ -1,0 +1,330 @@
+﻿//**** 初回起動 ****************************************************************************
+//---- OnFirstBoot事件 ------------------------------------------------------------------
+OnFirstBoot
+{
+	//---- 變數初期化
+	username			= "USER"
+	userbirthday			= "未知"
+	stroke				= 0		// 撫摸判定用
+	teachusername			= 0		// 記住user名用
+	teachuserbirthday		= 0		// 記住user生日用
+	mikireflag			= 0		// 見切處理用
+	intimacy			= 0		// 親密度設定
+	GhostFirstBoot			= GETSECCOUNT();
+	GhostLastBoot			= CurrentTime; 
+	otherghosttalkswitch		= "1"		// 與他人格對話
+	lastTalk			= ""		//避免剛啓動就出0
+	LastReactTime       = GETTIME //防止第一次启动没有timeout功能
+	//繁簡轉換什麽的……
+	fjswitch			= 0		//默認為不轉
+	//整點時報開關
+	sbswitch			= 0		//默認為開啟
+	//爲了提高適應性而進行的改變……
+	shell.name 			="master"
+	//---- 透過檢查Vanish次數來判定是否為真的初回起動
+	if reference0 == 0
+	{
+		//---- 初回起動
+		"\t\0\s[0]虚无二号机启动中……\w9\w9\n\■■■■■■■■■■■■■■■■100%\w9\w9\n\n\虚无二号机启动成功\x/
+		你好，我的名字是序仲乙，你就是我的新主人吗？\w9\w9\n\n/
+		\1\s[10]那么请登录姓名\x\![open,inputbox,TeachUsernameFirst,-1]\e"
+	}
+	else
+	{
+		//刪除過
+		"\t\0\s[0]這是刪除過結果又安裝了的初次啟動事件。\w9\w9\n\n/
+		\1\s[10]所以省略輸入用戶名的事情。\e"
+	}
+}
+Input.TeachUsernameFirst
+{
+	if reference1 == ""
+	{
+		"\0\s[0]輸入的用戶名為空的對話。\w9\w9\n\n/
+		\1\s[10]保持默認的用戶名USER。\e:chain=first"
+	}
+	else
+	{
+		username = "%(reference1)"
+		"\0\s[0]确认录入姓名为%(username)。\x 登陆成功。\w9\w9\n/
+		\1\s[10]确认完毕。%(username)请多多指教。\e:chain=first"
+	}
+}
+//**** 通常起動 ***********************************************************************************
+
+//---- OnBoot事件 -----------------------------------------------------------------------
+OnBoot
+{
+	GhostLastBoot		= CurrentTime; 
+	CurrentTime			= GETSECCOUNT();
+	lastTalk			= ""	//避免剛啓動就出0
+	CHAIN.IDName			=""
+	_timeslot = GetTimeSlot
+	LastReactTime       = GETTIME()    //判断是否timeout的变量
+	//---- 首先是顯示兩側
+	"\0\s[0]\1\s[10]"
+	--
+	//---- 根據起動的時間產生不同的對話
+	if _timeslot == "用戶生日"
+	{
+		"\0\s[0]%(username)生日當天啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+	elseif _timeslot == "情人節"
+	{
+		"\0\s[0]情人節當天啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+	elseif _timeslot == "白色情人節"
+	{
+		"\0\s[0]白色情人節當天啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+	elseif _timeslot == "聖誕節前夜"
+	{
+		"\0\s[0]聖誕夜（12月24日）當天啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+	elseif _timeslot == "聖誕節"
+	{
+		"\0\s[0]聖誕節當天啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+	elseif _timeslot == "序仲乙生日"
+	{
+		"\0<微笑>今天是我生日哦~\w9\w9\n\n/
+		\1\s[10]需要我放首生日歌吗？\e"
+	}
+	elseif _timeslot == "Earlymorning"
+	{
+		"\0\s[0]早上4點到7點啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+	elseif _timeslot == "Morning"
+	{
+		"\0\s[0]早上8點到9點啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+	elseif _timeslot == "Noon"
+	{
+		"\0\s[0]早上10點到12點啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+	elseif _timeslot == "Afternoon"
+	{
+		"\0\s[0]下午13點到16點啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+	elseif _timeslot == "Evening"
+	{
+		"\0\s[0]下午17點到20點啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+	elseif _timeslot == "Night"
+	{
+		"\0\s[0]下午21點到23點啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+	else
+	{
+		"\0\s[0]晚上0點到早上3點啟動發生的對話。\w9\w9\n\n/
+		\1\s[10]因為沒有寫，\w9所以就當做已經說過了吧。\e"
+	}
+}
+
+//**** 時間帯判定 **********************************************************************
+GetTimeSlot
+{
+	if userbirthday[1] == month && userbirthday[2] == day
+    {
+    	"用戶生日"
+   	}
+	elseif month == 2 && day == 14
+	{
+		"情人節"
+	}
+	elseif month == 3 && day == 14
+	{
+		"白色情人節"
+	}
+	elseif month == 4 && day == 18
+	{
+		"虚无创立"
+	}
+	elseif month == 7 && day == 22
+	{
+		"网站上线"
+	}
+	elseif month == 10 && day == 19
+	{
+		"序仲乙生日"
+	}
+	elseif month == 12 && day == 24
+	{
+		"聖誕節前夜"
+	}
+	elseif month == 12 && day == 25
+	{
+		"聖誕節"
+	}
+	elseif hour >= 4 && hour <= 7
+	{
+		"Earlymorning"
+	}
+	elseif hour >= 8 && hour <= 9
+	{	
+		"Morning"
+	}
+	elseif hour >= 10 && hour <= 12
+	{
+		"Noon"
+	}
+	elseif hour >= 13 && hour <= 16
+	{
+		"Afternoon"
+	}
+	elseif hour >= 17 && hour <= 20
+	{
+		"Evening"
+	}
+	elseif hour >= 21 && hour <= 23
+	{
+		"Night"
+	}
+	else
+	{
+		"Midnight"
+	}
+}
+GetTimeSlot2
+{
+	if hour >= 4 && hour <= 7
+	{
+		"Earlymorning"
+	}
+	elseif hour >= 8 && hour <= 9
+	{	
+		"Morning"
+	}
+	elseif hour >= 10 && hour <= 12
+	{
+		"Noon"
+	}
+	elseif hour >= 13 && hour <= 16
+	{
+		"Afternoon"
+	}
+	elseif hour >= 17 && hour <= 20
+	{
+		"Evening"
+	}
+	elseif hour >= 21 && hour <= 23
+	{
+		"Night"
+	}
+	else
+	{
+		"Midnight"
+	}
+}
+//**** 終了 *********************************************************************************
+//---- OnClose事件 ----------------------------------------------------------------------
+OnClose
+{
+	_timeslot = GetTimeSlot2
+	case _timeslot
+	{
+		when "Earlymorning"
+		{
+			"\0<疑问>已经要走了吗？\n\n/
+			\1不会是现在才去睡吧/
+			\0<冷汗>注意身体啊"
+		}
+		when "Morning"
+		{
+			"\0<默认>下午记得再来找我玩哦~\w9\w9"
+		}
+		when "Noon"
+		{
+			"\0<正常>是去吃午饭吗？\w9回见\w0\w9\n\n"
+		}
+		when "Afternoon"
+		{
+			"\0<正常>晚上再来玩哦！\w9\w9\n\n"
+		}
+		when "Evening"
+		{
+			"\0<正常>明天见\w9\w9\n\n"
+		}
+		when "Night"
+		{
+			"\0<正常>已经要睡了吗？\w9\w9晚安。\w9\w9\n\n"
+		}
+		others
+		{
+			"\0<惊讶>现在在虚无最活跃的时间，\w5你真的要走吗？\w9\w9\n\n"
+		}
+	}
+	--
+	"\w9\w9\-\e"
+}
+
+//**** 最小化還原 *********************************************************************************
+
+//---- OnWindowStateRestore事件 ---------------------------------------------------------
+OnWindowStateRestore
+{
+	"\0\s[0]從最小化復原的對話。\e"
+}
+
+
+//**** GHOST/SHELL變換 ****************************************************************************
+
+//---- 切換至別的GHOST ------------------------------------------------------------------
+OnGhostChanging
+{
+	if reference0 == "殼"
+	{"\0\s[0]重新載入人格的對話。\w9\w9\e"
+	}
+	elseif reference1 == "manual"
+	{
+		//---- 手動切換
+		ChangeToOthers
+	}
+	else
+	{
+		//---- 自動切換
+		"\0\s[0]自動切換到人格%(reference0)。\1\s[10]\w9\w9\e"
+	}
+}
+
+//---- 切換自別的GHOST ------------------------------------------------------------------
+OnGhostChanged
+{
+	GhostLastBoot		= CurrentTime; 
+	CurrentTime			= GETSECCOUNT();
+	lastTalk			= ""	//避免剛啓動就出0
+	CHAIN.IDName			=""
+	if reference0 == "殼"
+	{
+		//---- 重新啟動完成
+		"\0\s[0]重新啟動完成的對話。\1\s[10]\e"
+	}
+	else
+	{
+	//從其他人格切換而來
+	ChangeFromOthers
+	}
+}
+
+//---关机的时候，如果尚未關閉人格
+OnCloseAll
+{
+	if reference0 == 'shutdown' 
+	{
+		"\0<惊讶>紧急警告！电量枯竭——！\w9\w9/
+		\0<叹气>什...什么啊，\w5还以为没电了呢。\w5/
+		\0<生气>你就不能好好关闭人格吗！\w9\w9\-\e"
+	}
+}
+

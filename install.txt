@@ -1,0 +1,8 @@
+﻿//編碼
+Charset,UTF-8
+//安裝包種類
+type,ghost
+//人格名稱
+name,序仲乙
+//文件夾名稱
+directory,xuwu

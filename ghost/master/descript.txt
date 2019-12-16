@@ -1,0 +1,14 @@
+﻿charset,UTF-8
+name,序仲乙
+type,ghost
+
+craftman,xuwu
+craftmanw,虚无
+craftmanurl,http://xuwugroup.com
+
+
+sakura.name,序仲乙
+
+sstp.allowunspecifiedsend,1
+
+shiori,yaya.dll

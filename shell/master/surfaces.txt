@@ -1,0 +1,52 @@
+charset, UTF-8
+
+descript
+{
+version,1
+}
+
+surface0,1,2,3,4
+{
+//触摸判定都是由矩形組成
+//collision<數字>不能重複
+//圖片左上角為(0,0)，
+//後面四個數字分別是矩形的左上角的x坐標、y坐標、矩形右下角的x坐標、y坐標
+//最後一個詞語是可以重複的
+//按照這個詞語判定觸摸在哪一部分而不是按照collision<數字>來判定就可以實現不同的區域有同樣的效果
+//黨判定區域重叠時，先被定義的區域優先
+collision0,134,64,178,100,face
+collision1,122,104,206,145,shoulder
+collision2,118,22,205,119,head
+collision3,125,139,197,181,chest
+collision4,170,196,202,219,hands
+collision5,111,230,127,256,hands
+collision6,118,132,128,240,arms
+collision7,196,130,226,221,arms
+collision8,127,149,197,230,belly
+collision9,117,217,210,291,skirt
+collision10,125,324,167,364,knees
+collision11,165,328,202,363,knees
+collision12,124,269,164,520,legs
+collision13,171,271,206,513,legs
+
+//因爲頭髮的不規則，所以以下全部是頭髮的判定區域
+collision14,90,84,238,148,hair
+collision15,49,114,292,187,hair
+collision16,25,175,329,297,hair
+collision17,49,281,290,375,hair
+collision18,34,345,267,380,hair
+collision19,92,369,254,403,hair
+collision20,88,395,109,419,hair
+collision21,89,413,100,442,hair
+}
+
+surface11
+{
+    animation0.interval,always
+    animation0.pattern0,overlay,1100,30,0,0
+    animation0.pattern1,overlay,1101,30,0,0
+    animation0.pattern2,overlay,1102,30,0,0
+    animation0.pattern3,overlay,1103,30,0,0
+    animation0.pattern4,overlay,1104,30,0,0
+    animation0.pattern5,overlay,1105,30,0,0
+}
